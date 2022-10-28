@@ -72,6 +72,13 @@ public class Gui {
     JButton backTo;
     ArrayList<Expense>expenses = new ArrayList<>();
 
+    //Gui constructor
+    public Gui() {
+        createLoginGui();
+        createChoiceWindow();
+        createIncomeWindow();
+        createExpenseGui();
+    }
     public void createIncomeWindow() {
         incomeFrame = new JFrame();
         incomePanel = new JPanel();
