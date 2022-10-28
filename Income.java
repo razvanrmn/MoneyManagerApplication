@@ -1,8 +1,20 @@
-public class Income extends Accounts{
+public class Income extends Accounts implements Cont{
     private double amount;
     private String category;
     private String account;
-    private double balance;
+    public static double balance;
+
+    public Income() {
+        this.category = "Undefined";
+        this.account = "Undefined";
+        this.amount = -1;
+    }
+
+    public Income (Income i) {
+        this.amount = i.amount;
+        this.account = i.account;
+        this.category = i.category;
+    }
 
     public void setAmount(double amount){
         this.amount=amount;
@@ -14,9 +26,6 @@ public class Income extends Accounts{
 
     public void setAccount(String account){
         this.account=account;
-    }
-    public void setBalance(double balance){
-        this.balance=balance;
     }
 
     public double getAmount(){
@@ -32,7 +41,7 @@ public class Income extends Accounts{
     }
 
     public double getBalance(){
-        return this.balance;
+        return balance;
     }
 
 
@@ -43,14 +52,19 @@ public class Income extends Accounts{
 
     @Override
     public void transaction() {
+        System.out.println("Income balance " +balance + " " + amount);
         balance+=amount;
     }
 
     @Override
     public String toString() {
         StringBuffer str = new StringBuffer();
-        str.append("");
-
+        str.append(account);
+        str.append(" ");
+        str.append(amount);
+        str.append(" ");
+        str.append(category);
+        str.append(" ");
         return str.toString();
     }
 

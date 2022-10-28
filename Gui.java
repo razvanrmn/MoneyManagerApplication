@@ -5,8 +5,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class Gui {
-
-    Income in = new Income();
     //variables for income window
     JFrame incomeFrame;
     JPanel incomePanel;
@@ -28,12 +26,13 @@ public class Gui {
     ArrayList<Income> incomes = new ArrayList<>();
     int i;
     JButton back;
+
     //variables for choice window
     JFrame choiceFrame;
     JPanel choicePanel;
     JButton incomeButton;
     JButton expenseButton;
-    ArrayList<Label> incomesExpenses;
+    ArrayList<JLabel> incomesExpenses;
 
     JFrame frameExpenseWindow;
     JPanel expensePanel;
@@ -44,9 +43,9 @@ public class Gui {
     String[] expenseCategories = {"-Select-", "Food", "Bills", "Entertainment", "Other"};
     JComboBox expenseCombo;
 
-   // JTextField amountField;
+    // JTextField amountField;
     //ImageIcon myImage = new ImageIcon("src\\porc.png");
-    ImageIcon logginImage = new ImageIcon("src\\porcusorLogin.png");
+    ImageIcon loginImage = new ImageIcon("src\\porcusorLogin.png");
     ImageIcon expenseImage = new ImageIcon("src\\porcusorExpense.png");
     JLabel imageLabelExpense;
     JTextField expenseField;
@@ -68,6 +67,8 @@ public class Gui {
     JLabel imageLabelLogin;
     JButton backTo;
     ArrayList<Expense>expenses = new ArrayList<>();
+
+    JLabel balanceLabel = new JLabel();
 
     //Gui constructor
     public Gui() {
@@ -141,25 +142,32 @@ public class Gui {
         label.setIcon(myImage);
         label.setBounds(100, 220, 300, 300);
 
-
         addIncome.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 incomes.add(new Income());
                 transaction(incomes);
                 incomes.get(i).transaction();
-                System.out.println("Income balance is: " + incomes.get(i).getBalance());
+                Expense.balance+= incomes.get(i).getAmount();
+                System.out.println(incomes.get(i).toString());
                 i++;
+                amountField.setText("");
                 FileSingleton.getInstance().writeMsg("S-a apasat butonul");
             }
-
         });
 
         back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                incomeFrame.setVisible(false);
                 choiceFrame.setVisible(true);
+                incomeFrame.setVisible(false);
+                choiceFrame.remove(balanceLabel);
+                balanceLabel = new JLabel("Your current balance is " + Income.balance);
+                balanceLabel.setBounds(30, 20, 200, 20);
+                balanceLabel.setForeground(fontColor);
+                balanceLabel.setFont(myFont);
+                choiceFrame.add(balanceLabel);
+                choiceFrame.repaint();
             }
         });
 
@@ -182,7 +190,6 @@ public class Gui {
         incomeFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
-
     public void createChoiceWindow(){
         choiceFrame = new JFrame();
         choicePanel = new JPanel();
@@ -196,7 +203,6 @@ public class Gui {
         incomeButton.setBackground(buttonColor);
         expenseButton.setBounds(80, 450, 100, 30);
         incomeButton.setBounds(210, 450, 100, 30);
-
 
         incomeButton.addActionListener(new ActionListener() {
             @Override
@@ -218,36 +224,32 @@ public class Gui {
         choicePanel.setBackground(bgColor);
         choicePanel.add(expenseButton);
         choicePanel.add(incomeButton);
-
         choiceFrame.setLayout(null);
         choiceFrame.setVisible(false);
         choiceFrame.setResizable(false);
         choiceFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
-    public void transaction(ArrayList<Income> incomes){
-        if(card.isSelected()) {
-            incomes.get(i).setAccount("Card");
+    public void transaction(ArrayList<Income> incomes) {
+        if ((!card.isSelected() && !cash.isSelected()) || category.getItemAt(category.getSelectedIndex()).equals("-Select-") || amountField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(incomeFrame, "All fields are required!", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+            if (card.isSelected()) {
+                incomes.get(i).setAccount("Card");
+            } else if (cash.isSelected()) {
+                incomes.get(i).setAccount("Cash");
+            }
+            if (!category.getItemAt(category.getSelectedIndex()).equals("-Select-"))
+                incomes.get(i).setCategory((String) category.getItemAt(category.getSelectedIndex()));
+            if (!amountField.getText().isEmpty())
+                try {
+                    incomes.get(i).setAmount(Double.parseDouble(amountField.getText()));
+                    JOptionPane.showMessageDialog(incomeFrame, "Income added successfully!");
+                } catch (NumberFormatException e) {
+                    System.out.println("Number format exception");
+                    amountField.setText("");
+                }
         }
-        else if (cash.isSelected()){
-            incomes.get(i).setAccount("Cash");
-        }
-        else{
-            JOptionPane.showMessageDialog(incomeFrame, "Choose an account!","Warning" , JOptionPane.WARNING_MESSAGE);
-        }
-        if(category.getItemAt(category.getSelectedIndex()).equals("-Select-")){
-            JOptionPane.showMessageDialog(incomeFrame, "Choose a category!","Warning" , JOptionPane.WARNING_MESSAGE);
-        }
-        else {
-            incomes.get(i).setCategory((String) category.getItemAt(category.getSelectedIndex()));
-        }
-        if(amountField.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(incomeFrame, "Enter an amount!","Warning" , JOptionPane.WARNING_MESSAGE);
-        }
-        else{
-            incomes.get(i).setAmount(Double.parseDouble(amountField.getText()));
-        }
-        JOptionPane.showMessageDialog(incomeFrame, "Income added successfully!");
     }
 
     public void createLoginGui() {
@@ -255,7 +257,6 @@ public class Gui {
         frameLogin = new JFrame();
         loginPanel =new JPanel();
         loginPanel.setBackground(bgColor);
-
         // Login Labels
         // - Title Label
         titleLabel = new JLabel();
@@ -277,13 +278,12 @@ public class Gui {
         passwordLabel.setForeground(fontColor);
         // - Background image Label
         imageLabelLogin = new JLabel();
-        imageLabelLogin.setIcon(logginImage);
+        imageLabelLogin.setIcon(loginImage);
         imageLabelLogin.setBounds(0,245,300,300);
         // - Alert Label
         alertText = new JLabel();
         alertText.setSize(200,200);
         alertText.setBounds(100,350,500,50);
-
         // Username input TextField
         user = new JTextField(15);
         user.setBounds(170,190,100,20);
@@ -342,15 +342,6 @@ public class Gui {
         frameLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    /*
-    JLabel exchangeLabel;
-    JButton exchangeButton;
-    JRadioButton euro;
-    JRadioButton dollars;
-    JRadioButton forint;
-    ButtonGroup currency;
-     */
-
     public void createExpenseGui() {
         // New Expense Frame and Field
         frameExpenseWindow = new JFrame();
@@ -361,13 +352,6 @@ public class Gui {
         expenseField.setBackground(fieldColor);
         expenseField.setForeground(fontColor);
 
-        /*
-        // Exchange Label
-        exchangeLabel = new JLabel("Exchange to:");
-        exchangeLabel.setBounds(220, 20, 110, 20);
-        exchangeLabel.setFont(myFont);
-        exchangeLabel.setForeground(fontColor);
-         */
         // Account Label
         expenseAccountLabel = new JLabel("Account:");
         expenseAccountLabel.setBounds(10, 20, 70, 20);
@@ -402,45 +386,22 @@ public class Gui {
         // - Cash button
         expenseRadioCash = new JRadioButton("Cash");
         expenseRadioCash.setBounds(97, 50, 100, 20);
+        expenseRadioCash.setOpaque(false);
         expenseRadioCash.setFont(myFont);
         expenseRadioCash.setForeground(fontColor);
-        expenseRadioCash.setOpaque(false);
+
+
         // - Card button
         expenseRadioCard = new JRadioButton("Card");
         expenseRadioCard.setBounds(97, 20, 100, 20);
         expenseRadioCard.setFont(myFont);
-        expenseRadioCard.setForeground(fontColor);
         expenseRadioCard.setOpaque(false);
+        expenseRadioCard.setForeground(fontColor);
+
         // - Button group
         expenseButtons = new ButtonGroup();
         expenseButtons.add(expenseRadioCash);
         expenseButtons.add(expenseRadioCard);
-
-        /*
-        // - EUR
-        euro = new JRadioButton("EUR");
-        euro.setBounds(330, 20, 100, 20);
-        euro.setFont(myFont);
-        euro.setForeground(fontColor);
-        euro.setOpaque(false);
-        // - USD
-        dollars = new JRadioButton("USD");
-        dollars.setBounds(330, 60, 100, 20);
-        dollars.setFont(myFont);
-        dollars.setForeground(fontColor);
-        dollars.setOpaque(false);
-        // - HUF
-        forint = new JRadioButton("HUF");
-        forint.setBounds(330, 100, 100, 20);
-        forint.setFont(myFont);
-        forint.setForeground(fontColor);
-        forint.setOpaque(false);
-        // Curency group
-        currency = new ButtonGroup();
-        currency.add(euro);
-        currency.add(dollars);
-        currency.add(forint);
-         */
         // - Add expense button
         expenseAddButton = new JButton("Add");
         expenseAddButton.setFont(myFont);
@@ -453,10 +414,8 @@ public class Gui {
         backTo = new JButton("Back");
         backTo.setFont(myFont);
         backTo.setBackground(buttonColor);
-        backTo.setForeground(Color.WHITE);
+        backTo.setForeground(Color.white);
         backTo.setBounds(20, 400, 70, 20);
-
-
 
         // Add expense button clicked
         expenseAddButton.addActionListener(new ActionListener() {
@@ -465,7 +424,7 @@ public class Gui {
                 expenses.add(new Expense());
                 transactionExpense(expenses);
                 expenses.get(j).transaction();
-                System.out.println("Expenses balance is: " + expenses.get(j).getBalance());
+                Income.balance-= expenses.get(j).getAmount();
                 j++;
             }
         });
@@ -475,6 +434,13 @@ public class Gui {
             public void actionPerformed(ActionEvent e) {
                 choiceFrame.setVisible(true);
                 frameExpenseWindow.setVisible(false);
+                choiceFrame.remove(balanceLabel);
+                balanceLabel = new JLabel("Your current balance is " + Expense.balance);
+                balanceLabel.setBounds(30, 20, 200, 20);
+                balanceLabel.setForeground(fontColor);
+                balanceLabel.setFont(myFont);
+                choiceFrame.add(balanceLabel);
+                choiceFrame.repaint();
             }
         });
 
@@ -490,18 +456,11 @@ public class Gui {
         expensePanel.add(expenseCategoryLabel);
         expensePanel.add(expenseAddButton);
         expensePanel.add(backTo);
-        /*
-        expensePanel.add(exchangeLabel);
-        expensePanel.add(euro);
-        expensePanel.add(dollars);
-        expensePanel.add(forint);
-         */
         frameExpenseWindow.setLayout(null);
         frameExpenseWindow.setResizable(false);
         frameExpenseWindow.setVisible(false);
         frameExpenseWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-
     public void transactionExpense(ArrayList<Expense> expenseTransaction){
         if(expenseRadioCard.isSelected()) {
             expenseTransaction.get(j).setAccount("Card");
@@ -541,6 +500,5 @@ public class Gui {
             expenseField.setText("");
         }
     }
-
 
 }
