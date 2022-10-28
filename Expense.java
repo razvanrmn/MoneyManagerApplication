@@ -2,7 +2,7 @@ public class Expense extends Accounts{
     private double amount;
     private String category;
     private String account;
-    private double balance;
+    private static double balance;
     private final double EUR = 4.90;
     private final double USD = 4.96;
     private final double HUF = 1.18;
@@ -34,6 +34,9 @@ public class Expense extends Accounts{
         }
         else if(amount <= 0) {
             System.out.println("Enter a valid amount");
+        }
+        else {
+            balance -= amount;
         }
     }
 
