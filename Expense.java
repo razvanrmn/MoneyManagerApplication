@@ -29,15 +29,7 @@ public class Expense extends Accounts{
 
     @Override
     public void transaction() {
-        if(amount > balance) {
-            System.out.println("You don't have enough money"); // JPane (fereasta cu warning)
-        }
-        else if(amount <= 0) {
-            System.out.println("Enter a valid amount");
-        }
-        else {
             balance -= amount;
-        }
     }
 
     @Override

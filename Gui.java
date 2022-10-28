@@ -2,8 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 public class Gui {
@@ -30,7 +28,6 @@ public class Gui {
     ArrayList<Income> incomes = new ArrayList<>();
     int i;
     JButton back;
-
     //variables for choice window
     JFrame choiceFrame;
     JPanel choicePanel;
@@ -151,7 +148,7 @@ public class Gui {
                 incomes.add(new Income());
                 transaction(incomes);
                 incomes.get(i).transaction();
-                System.out.println(incomes.get(i).getBalance());
+                System.out.println("Income balance is: " + incomes.get(i).getBalance());
                 i++;
                 FileSingleton.getInstance().writeMsg("S-a apasat butonul");
             }
@@ -161,7 +158,7 @@ public class Gui {
         back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //incomeFrame.setVisible(false);
+                incomeFrame.setVisible(false);
                 choiceFrame.setVisible(true);
             }
         });
@@ -199,6 +196,7 @@ public class Gui {
         incomeButton.setBackground(buttonColor);
         expenseButton.setBounds(80, 450, 100, 30);
         incomeButton.setBounds(210, 450, 100, 30);
+
 
         incomeButton.addActionListener(new ActionListener() {
             @Override
@@ -264,16 +262,19 @@ public class Gui {
         titleLabel.setBounds(200, 13, 273, 93);
         titleLabel.setText("Title");
         titleLabel.setFont(myFont);
+        titleLabel.setForeground(fontColor);
         // - Username label
         userLabel = new JLabel();
         userLabel.setBounds(170, 80, 200, 200);
         userLabel.setText("Username");
         userLabel.setFont(myFont);
+        userLabel.setForeground(fontColor);
         // - Password label
         passwordLabel = new JLabel();
         passwordLabel.setBounds(170, 150, 200,200);
         passwordLabel.setText("Password");
         passwordLabel.setFont(myFont);
+        passwordLabel.setForeground(fontColor);
         // - Background image Label
         imageLabelLogin = new JLabel();
         imageLabelLogin.setIcon(logginImage);
@@ -286,16 +287,19 @@ public class Gui {
         // Username input TextField
         user = new JTextField(15);
         user.setBounds(170,190,100,20);
-        user.setForeground(Color.black);
+        user.setBackground(fieldColor);
+        user.setForeground(fontColor);
         // Password input PasswordField
         pass = new JPasswordField(15);
         pass.setBounds(170, 260, 100,20);
-        pass.setForeground(Color.black);
+        pass.setBackground(fieldColor);
+        pass.setForeground(fontColor);
         // Login button
         btnLoginSubmit = new JButton("Login");
         btnLoginSubmit.setFont(myFont);
         btnLoginSubmit.setBounds(160,330,100,20);
         btnLoginSubmit.setBackground(buttonColor);
+        btnLoginSubmit.setForeground(Color.WHITE);
         btnLoginSubmit.setBorderPainted(false);
         btnLoginSubmit.setFocusPainted(false);
 
@@ -322,8 +326,6 @@ public class Gui {
             }
         });
 
-
-
         frameLogin.setSize(400, 550);
         frameLogin.setContentPane(loginPanel);
         loginPanel.add(titleLabel);
@@ -340,6 +342,15 @@ public class Gui {
         frameLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+    /*
+    JLabel exchangeLabel;
+    JButton exchangeButton;
+    JRadioButton euro;
+    JRadioButton dollars;
+    JRadioButton forint;
+    ButtonGroup currency;
+     */
+
     public void createExpenseGui() {
         // New Expense Frame and Field
         frameExpenseWindow = new JFrame();
@@ -347,21 +358,33 @@ public class Gui {
         expensePanel.setBackground(bgColor);
         expenseField = new JTextField(30);
         expenseField.setBounds(97, 210, 100, 20);
+        expenseField.setBackground(fieldColor);
+        expenseField.setForeground(fontColor);
 
+        /*
+        // Exchange Label
+        exchangeLabel = new JLabel("Exchange to:");
+        exchangeLabel.setBounds(220, 20, 110, 20);
+        exchangeLabel.setFont(myFont);
+        exchangeLabel.setForeground(fontColor);
+         */
         // Account Label
         expenseAccountLabel = new JLabel("Account:");
         expenseAccountLabel.setBounds(10, 20, 70, 20);
         expenseAccountLabel.setFont(myFont);
+        expenseAccountLabel.setForeground(fontColor);
 
         // Category Label
         expenseCategoryLabel = new JLabel("Category:");
         expenseCategoryLabel.setBounds(10, 100, 100, 20);
         expenseCategoryLabel.setFont(myFont);
+        expenseCategoryLabel.setForeground(fontColor);
 
         // Amount Label
         expenseLabel = new JLabel("Amount:");
         expenseLabel.setBounds(10, 210, 70, 20);
         expenseLabel.setFont(myFont);
+        expenseLabel.setForeground(fontColor);
 
         // Image Label
         imageLabelExpense = new JLabel();
@@ -372,26 +395,57 @@ public class Gui {
         expenseCombo = new JComboBox(expenseCategories);
         expenseCombo.setBounds(97, 100, 120, 20);
         expenseCombo.setFont(myFont);
+        expenseCombo.setBackground(fieldColor);
+        expenseCombo.setForeground(fontColor);
 
         // Expense buttons
         // - Cash button
         expenseRadioCash = new JRadioButton("Cash");
         expenseRadioCash.setBounds(97, 50, 100, 20);
-        expenseRadioCash.setOpaque(false);
         expenseRadioCash.setFont(myFont);
+        expenseRadioCash.setForeground(fontColor);
+        expenseRadioCash.setOpaque(false);
         // - Card button
         expenseRadioCard = new JRadioButton("Card");
         expenseRadioCard.setBounds(97, 20, 100, 20);
         expenseRadioCard.setFont(myFont);
+        expenseRadioCard.setForeground(fontColor);
         expenseRadioCard.setOpaque(false);
         // - Button group
         expenseButtons = new ButtonGroup();
         expenseButtons.add(expenseRadioCash);
         expenseButtons.add(expenseRadioCard);
+
+        /*
+        // - EUR
+        euro = new JRadioButton("EUR");
+        euro.setBounds(330, 20, 100, 20);
+        euro.setFont(myFont);
+        euro.setForeground(fontColor);
+        euro.setOpaque(false);
+        // - USD
+        dollars = new JRadioButton("USD");
+        dollars.setBounds(330, 60, 100, 20);
+        dollars.setFont(myFont);
+        dollars.setForeground(fontColor);
+        dollars.setOpaque(false);
+        // - HUF
+        forint = new JRadioButton("HUF");
+        forint.setBounds(330, 100, 100, 20);
+        forint.setFont(myFont);
+        forint.setForeground(fontColor);
+        forint.setOpaque(false);
+        // Curency group
+        currency = new ButtonGroup();
+        currency.add(euro);
+        currency.add(dollars);
+        currency.add(forint);
+         */
         // - Add expense button
         expenseAddButton = new JButton("Add");
         expenseAddButton.setFont(myFont);
         expenseAddButton.setBackground(buttonColor);
+        expenseAddButton.setForeground(Color.WHITE);
         expenseAddButton.setBounds(10, 240, 100, 20);
         expenseAddButton.setBorderPainted(false);
         expenseAddButton.setFocusPainted(false);
@@ -399,8 +453,10 @@ public class Gui {
         backTo = new JButton("Back");
         backTo.setFont(myFont);
         backTo.setBackground(buttonColor);
-        backTo.setForeground(Color.white);
+        backTo.setForeground(Color.WHITE);
         backTo.setBounds(20, 400, 70, 20);
+
+
 
         // Add expense button clicked
         expenseAddButton.addActionListener(new ActionListener() {
@@ -409,7 +465,7 @@ public class Gui {
                 expenses.add(new Expense());
                 transactionExpense(expenses);
                 expenses.get(j).transaction();
-                System.out.println(expenses.get(j).getBalance());
+                System.out.println("Expenses balance is: " + expenses.get(j).getBalance());
                 j++;
             }
         });
@@ -434,6 +490,12 @@ public class Gui {
         expensePanel.add(expenseCategoryLabel);
         expensePanel.add(expenseAddButton);
         expensePanel.add(backTo);
+        /*
+        expensePanel.add(exchangeLabel);
+        expensePanel.add(euro);
+        expensePanel.add(dollars);
+        expensePanel.add(forint);
+         */
         frameExpenseWindow.setLayout(null);
         frameExpenseWindow.setResizable(false);
         frameExpenseWindow.setVisible(false);
@@ -460,8 +522,13 @@ public class Gui {
             JOptionPane.showMessageDialog(frameExpenseWindow, "Enter an amount!","Warning" , JOptionPane.WARNING_MESSAGE);
         }
         else{
-            expenseTransaction.get(j).setAmount(Double.parseDouble(expenseField.getText()));
-            JOptionPane.showMessageDialog(frameExpenseWindow, "Income added successfully!");
+            try {
+                expenseTransaction.get(j).setAmount(Double.parseDouble(expenseField.getText()));
+                JOptionPane.showMessageDialog(frameExpenseWindow, "Expense added successfully!");
+            }
+            catch (NumberFormatException ex){
+                JOptionPane.showMessageDialog(frameExpenseWindow, "Invalid amount value", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
         try {
             if (expenseField.getText().isBlank() || expenseField.getText().isEmpty()) {
@@ -474,5 +541,6 @@ public class Gui {
             expenseField.setText("");
         }
     }
+
 
 }
