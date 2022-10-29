@@ -3,6 +3,7 @@ public class Income extends Accounts implements Cont{
     private String category;
     private String account;
     public static double balance;
+    public static double total;
 
     public Income() {
         this.category = "Undefined";
@@ -70,6 +71,6 @@ public class Income extends Accounts implements Cont{
 
     @Override
     public void total() {
-
+        total+=amount;
     }
 }
