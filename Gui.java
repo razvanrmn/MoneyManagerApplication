@@ -538,4 +538,5 @@ public class Gui {
             i++;
         }
         choiceFrame.repaint();
+ }
 }
