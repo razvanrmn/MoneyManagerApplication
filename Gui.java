@@ -531,7 +531,7 @@ public class Gui {
         }
         for(int j=0; j<expenses.size(); j++){
             incExp.add(new JLabel("Expense: " + expenses.get(j).toString()));
-            incExp.get(i).setBounds(10, 250+20*i, 400, 20);
+            incExp.get(i).setBounds(10, 250+20*j, 400, 20);
             incExp.get(i).setFont(myFont);
             incExp.get(i).setForeground(fontColor);
             choicePanel.add(incExp.get(i));
