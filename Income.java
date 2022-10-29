@@ -45,12 +45,6 @@ public class Income extends Accounts implements Cont{
         return balance;
     }
 
-
-    @Override
-    public double convert() {
-        return 0;
-    }
-
     @Override
     public void transaction() {
         System.out.println("Income balance " +balance + " " + amount);
