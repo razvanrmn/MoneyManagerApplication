@@ -68,8 +68,9 @@ public class Gui {
     JButton backTo;
     ArrayList<Expense>expenses = new ArrayList<>();
 
-    JLabel balanceLabel = new JLabel();
-    JLabel totalInc= new JLabel();
+    JLabel balanceLabel;
+    JLabel totalInc;
+    JLabel totalExp;
     ArrayList<JLabel>incExp = new ArrayList<>();
 
     //Gui constructor
@@ -151,12 +152,7 @@ public class Gui {
                 transaction(incomes);
                 incomes.get(i).transaction();
                 incomes.get(i).total();
-                choicePanel.remove(totalInc);
-                totalInc = new JLabel("Total incomes: " + Income.total);
-                totalInc.setForeground(fontColor);
-                totalInc.setFont(myFont);
-                totalInc.setBounds(10, 50, 300, 20);
-                choicePanel.add(totalInc);
+                totalInc.setText("Total incomes: " + Income.total);
                 Expense.balance+= incomes.get(i).getAmount();
                 System.out.println(incomes.get(i).toString());
                 i++;
@@ -170,12 +166,7 @@ public class Gui {
             public void actionPerformed(ActionEvent e) {
                 choiceFrame.setVisible(true);
                 incomeFrame.setVisible(false);
-                choiceFrame.remove(balanceLabel);
-                balanceLabel = new JLabel("Your current balance is " + Income.balance);
-                balanceLabel.setBounds(30, 20, 200, 20);
-                balanceLabel.setForeground(fontColor);
-                balanceLabel.setFont(myFont);
-                choiceFrame.add(balanceLabel);
+                balanceLabel.setText("Your current balance is " + Income.balance);
                 list();
                 choiceFrame.repaint();
             }
@@ -213,6 +204,20 @@ public class Gui {
         incomeButton.setBackground(buttonColor);
         expenseButton.setBounds(80, 450, 100, 30);
         incomeButton.setBounds(210, 450, 100, 30);
+        balanceLabel = new JLabel("Your current balance is " + Income.balance);
+        balanceLabel.setBounds(70, 20, 300, 20);
+        balanceLabel.setForeground(fontColor);
+        balanceLabel.setFont(myFont);
+
+        totalInc = new JLabel("Total incomes: " + Income.total);
+        totalInc.setForeground(fontColor);
+        totalInc.setFont(myFont);
+        totalInc.setBounds(10, 50, 300, 20);
+
+        totalExp= new JLabel("Total expenses: " + Expense.total);
+        totalExp.setForeground(fontColor);
+        totalExp.setFont(myFont);
+        totalExp.setBounds(10, 220, 300, 20);
 
         incomeButton.addActionListener(new ActionListener() {
             @Override
@@ -234,6 +239,9 @@ public class Gui {
         choicePanel.setBackground(bgColor);
         choicePanel.add(expenseButton);
         choicePanel.add(incomeButton);
+        choicePanel.add(balanceLabel);
+        choicePanel.add(totalInc);
+        choicePanel.add(totalExp);
         choiceFrame.setLayout(null);
         choiceFrame.setVisible(false);
         choiceFrame.setResizable(false);
