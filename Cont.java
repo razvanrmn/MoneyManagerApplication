@@ -1,7 +1,5 @@
 public interface Cont {
 
-    double convert();
-
     void transaction();
 
     String toString();
