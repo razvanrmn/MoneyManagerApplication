@@ -69,6 +69,8 @@ public class Gui {
     ArrayList<Expense>expenses = new ArrayList<>();
 
     JLabel balanceLabel = new JLabel();
+    JLabel totalInc= new JLabel();
+    ArrayList<JLabel>incExp = new ArrayList<>();
 
     //Gui constructor
     public Gui() {
@@ -148,6 +150,13 @@ public class Gui {
                 incomes.add(new Income());
                 transaction(incomes);
                 incomes.get(i).transaction();
+                incomes.get(i).total();
+                choicePanel.remove(totalInc);
+                totalInc = new JLabel("Total incomes: " + Income.total);
+                totalInc.setForeground(fontColor);
+                totalInc.setFont(myFont);
+                totalInc.setBounds(10, 50, 300, 20);
+                choicePanel.add(totalInc);
                 Expense.balance+= incomes.get(i).getAmount();
                 System.out.println(incomes.get(i).toString());
                 i++;
@@ -167,6 +176,7 @@ public class Gui {
                 balanceLabel.setForeground(fontColor);
                 balanceLabel.setFont(myFont);
                 choiceFrame.add(balanceLabel);
+                list();
                 choiceFrame.repaint();
             }
         });
@@ -440,6 +450,7 @@ public class Gui {
                 balanceLabel.setForeground(fontColor);
                 balanceLabel.setFont(myFont);
                 choiceFrame.add(balanceLabel);
+                list();
                 choiceFrame.repaint();
             }
         });
@@ -500,5 +511,23 @@ public class Gui {
             expenseField.setText("");
         }
     }
-
+    public void list(){
+        ArrayList<JLabel> incExp = new ArrayList<>();
+        int i;
+        for( i=0; i<incomes.size(); i++){
+            incExp.add(new JLabel("Income: " + incomes.get(i).toString()));
+            incExp.get(i).setBounds(10, 80+20*i, 400, 20);
+            incExp.get(i).setFont(myFont);
+            incExp.get(i).setForeground(fontColor);
+            choicePanel.add(incExp.get(i));
+        }
+        for(int j=0; j<expenses.size(); j++){
+            incExp.add(new JLabel("Expense: " + expenses.get(j).toString()));
+            incExp.get(i).setBounds(10, 250+20*i, 400, 20);
+            incExp.get(i).setFont(myFont);
+            incExp.get(i).setForeground(fontColor);
+            choicePanel.add(incExp.get(i));
+            i++;
+        }
+        choiceFrame.repaint();
 }
