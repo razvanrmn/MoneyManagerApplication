@@ -16,7 +16,7 @@ public class FileSingleton {
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
-        System.out.println("Fisierul a fost creeat");
+        System.out.println("File created");
     }
 
     public void writeMsg(String msg) {

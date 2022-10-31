@@ -8,7 +8,7 @@ public class Gui {
     //variables for income window
     JFrame incomeFrame;
     JPanel incomePanel;
-    String[] categories = {"-Select-","Salary", "Scholarship", "Pension", "Other"};
+    String[] categories = {"-Select-", "Salary", "Scholarship", "Pension", "Other"};
     JComboBox category;
     JButton addIncome;
     JRadioButton card;
@@ -17,10 +17,11 @@ public class Gui {
     JLabel incomeAccountLabel;
     JLabel incomeCategoryLabel;
     JTextField amountField;
-    Font myFont = new Font("SimSun", Font.PLAIN, 15);
-    Color bgColor= new Color(204,243,212);
+    Font myFont = new Font("SimSun", Font.BOLD, 15);
+    Font titleFont = new Font("SimSun", Font.PLAIN, 30);
+    Color bgColor = new Color(204, 243, 212);
     Color buttonColor = new Color(35, 186, 81);
-    Color fontColor= new Color(1, 115, 35);
+    Color fontColor = new Color(1, 115, 35);
     Color fieldColor = new Color(230, 252, 237);
     ImageIcon myImage;
     ArrayList<Income> incomes = new ArrayList<>();
@@ -32,8 +33,6 @@ public class Gui {
     JPanel choicePanel;
     JButton incomeButton;
     JButton expenseButton;
-    ArrayList<JLabel> incomesExpenses;
-
     JFrame frameExpenseWindow;
     JPanel expensePanel;
     JRadioButton expenseRadioCash;
@@ -42,9 +41,6 @@ public class Gui {
 
     String[] expenseCategories = {"-Select-", "Food", "Bills", "Entertainment", "Other"};
     JComboBox expenseCombo;
-
-    // JTextField amountField;
-    //ImageIcon myImage = new ImageIcon("src\\porc.png");
     ImageIcon loginImage = new ImageIcon("src\\porcusorLogin.png");
     ImageIcon expenseImage = new ImageIcon("src\\porcusorExpense.png");
     JLabel imageLabelExpense;
@@ -66,12 +62,13 @@ public class Gui {
     JLabel alertText;
     JLabel imageLabelLogin;
     JButton backTo;
-    ArrayList<Expense>expenses = new ArrayList<>();
+    JLabel expenseTitle;
+    ArrayList<Expense> expenses = new ArrayList<>();
 
     JLabel balanceLabel;
     JLabel totalInc;
     JLabel totalExp;
-    ArrayList<JLabel>incExp = new ArrayList<>();
+    ArrayList<JLabel> incExp = new ArrayList<>();
 
     //Gui constructor
     public Gui() {
@@ -79,7 +76,9 @@ public class Gui {
         createChoiceWindow();
         createIncomeWindow();
         createExpenseGui();
+        FileSingleton.getInstance().writeMsg("All windows were successfully created");
     }
+
     public void createIncomeWindow() {
         incomeFrame = new JFrame();
         incomePanel = new JPanel();
@@ -141,7 +140,7 @@ public class Gui {
 
         //image
         JLabel label = new JLabel();
-        myImage= new ImageIcon("src\\piggy.png");
+        myImage = new ImageIcon("src\\piggy.png");
         label.setIcon(myImage);
         label.setBounds(100, 220, 300, 300);
 
@@ -153,11 +152,11 @@ public class Gui {
                 incomes.get(i).transaction();
                 incomes.get(i).total();
                 totalInc.setText("Total incomes: " + Income.total);
-                Expense.balance+= incomes.get(i).getAmount();
+                Expense.balance += incomes.get(i).getAmount();
                 System.out.println(incomes.get(i).toString());
                 i++;
                 amountField.setText("");
-                FileSingleton.getInstance().writeMsg("S-a apasat butonul");
+                FileSingleton.getInstance().writeMsg("Add income button pressed");
             }
         });
 
@@ -169,6 +168,7 @@ public class Gui {
                 balanceLabel.setText("Your current balance is " + Income.balance);
                 list();
                 choiceFrame.repaint();
+                FileSingleton.getInstance().writeMsg("Back button from Income window pressed");
             }
         });
 
@@ -191,39 +191,44 @@ public class Gui {
         incomeFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
-    public void createChoiceWindow(){
+    public void createChoiceWindow() {
         choiceFrame = new JFrame();
         choicePanel = new JPanel();
-        expenseButton= new JButton("Expense");
-        incomeButton= new JButton("Income");
+        expenseButton = new JButton("Expense");
+        incomeButton = new JButton("Income");
         expenseButton.setFont(myFont);
         incomeButton.setFont(myFont);
         expenseButton.setForeground(Color.white);
         incomeButton.setForeground(Color.white);
         expenseButton.setBackground(buttonColor);
         incomeButton.setBackground(buttonColor);
+        incomeButton.setBorderPainted(false);
+        incomeButton.setFocusPainted(false);
         expenseButton.setBounds(80, 450, 100, 30);
+        expenseButton.setBorderPainted(false);
+        expenseButton.setFocusPainted(false);
         incomeButton.setBounds(210, 450, 100, 30);
         balanceLabel = new JLabel("Your current balance is " + Income.balance);
-        balanceLabel.setBounds(70, 20, 300, 20);
+        balanceLabel.setBounds(70, 35, 300, 20);
         balanceLabel.setForeground(fontColor);
         balanceLabel.setFont(myFont);
 
         totalInc = new JLabel("Total incomes: " + Income.total);
         totalInc.setForeground(fontColor);
         totalInc.setFont(myFont);
-        totalInc.setBounds(10, 50, 300, 20);
+        totalInc.setBounds(10, 75, 300, 20);
 
-        totalExp= new JLabel("Total expenses: " + Expense.total);
+        totalExp = new JLabel("Total expenses: " + Expense.total);
         totalExp.setForeground(fontColor);
         totalExp.setFont(myFont);
-        totalExp.setBounds(10, 220, 300, 20);
+        totalExp.setBounds(10, 250, 300, 20);
 
         incomeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 incomeFrame.setVisible(true);
                 choiceFrame.setVisible(false);
+                FileSingleton.getInstance().writeMsg("Add Income button from Choice Window pressed");
             }
         });
         expenseButton.addActionListener(new ActionListener() {
@@ -231,6 +236,7 @@ public class Gui {
             public void actionPerformed(ActionEvent e) {
                 frameExpenseWindow.setVisible(true);
                 choiceFrame.setVisible(false);
+                FileSingleton.getInstance().writeMsg("Expense button from Choice Window pressed");
             }
         });
 
@@ -265,6 +271,7 @@ public class Gui {
                     JOptionPane.showMessageDialog(incomeFrame, "Income added successfully!");
                 } catch (NumberFormatException e) {
                     System.out.println("Number format exception");
+                    FileSingleton.getInstance().writeMsg("Number format exception transaction Income");
                     amountField.setText("");
                 }
         }
@@ -273,49 +280,49 @@ public class Gui {
     public void createLoginGui() {
         // New login Frame and Panel
         frameLogin = new JFrame();
-        loginPanel =new JPanel();
+        loginPanel = new JPanel();
         loginPanel.setBackground(bgColor);
         // Login Labels
         // - Title Label
         titleLabel = new JLabel();
-        titleLabel.setBounds(200, 13, 273, 93);
-        titleLabel.setText("Title");
-        titleLabel.setFont(myFont);
+        titleLabel.setBounds(135, 53, 273, 93);
+        titleLabel.setText("Welcome");
+        titleLabel.setFont(titleFont);
         titleLabel.setForeground(fontColor);
         // - Username label
         userLabel = new JLabel();
-        userLabel.setBounds(170, 80, 200, 200);
+        userLabel.setBounds(40, 200, 200, 20);
         userLabel.setText("Username");
         userLabel.setFont(myFont);
         userLabel.setForeground(fontColor);
         // - Password label
         passwordLabel = new JLabel();
-        passwordLabel.setBounds(170, 150, 200,200);
+        passwordLabel.setBounds(40, 230, 200, 20);
         passwordLabel.setText("Password");
         passwordLabel.setFont(myFont);
         passwordLabel.setForeground(fontColor);
         // - Background image Label
         imageLabelLogin = new JLabel();
         imageLabelLogin.setIcon(loginImage);
-        imageLabelLogin.setBounds(0,245,300,300);
+        imageLabelLogin.setBounds(110, 233, 300, 300);
         // - Alert Label
         alertText = new JLabel();
-        alertText.setSize(200,200);
-        alertText.setBounds(100,350,500,50);
+        alertText.setSize(200, 200);
+        alertText.setBounds(100, 350, 500, 50);
         // Username input TextField
         user = new JTextField(15);
-        user.setBounds(170,190,100,20);
+        user.setBounds(118, 200, 100, 20);
         user.setBackground(fieldColor);
         user.setForeground(fontColor);
         // Password input PasswordField
         pass = new JPasswordField(15);
-        pass.setBounds(170, 260, 100,20);
+        pass.setBounds(118, 230, 100, 20);
         pass.setBackground(fieldColor);
         pass.setForeground(fontColor);
         // Login button
         btnLoginSubmit = new JButton("Login");
         btnLoginSubmit.setFont(myFont);
-        btnLoginSubmit.setBounds(160,330,100,20);
+        btnLoginSubmit.setBounds(95, 280, 80, 20);
         btnLoginSubmit.setBackground(buttonColor);
         btnLoginSubmit.setForeground(Color.WHITE);
         btnLoginSubmit.setBorderPainted(false);
@@ -329,17 +336,15 @@ public class Gui {
                 String password = String.valueOf(pass.getPassword());
 
                 if ((username.isBlank() && username.isEmpty()) && (password.isBlank() && password.isEmpty())) {
-                    JOptionPane.showMessageDialog(incomeFrame, "Fields cannot be left empty","Blank fields" , JOptionPane.ERROR_MESSAGE);
-                }
-                else if (username.isBlank() && username.isEmpty()) {
-                    JOptionPane.showMessageDialog(incomeFrame, "Username field is empty","Empty username" , JOptionPane.ERROR_MESSAGE);
-                }
-                else if (password.isBlank() && password.isEmpty()) {
-                    JOptionPane.showMessageDialog(incomeFrame, "Password field is empty","Empty password" , JOptionPane.ERROR_MESSAGE);
-                }
-                else {
+                    JOptionPane.showMessageDialog(incomeFrame, "Fields cannot be left empty", "Blank fields", JOptionPane.ERROR_MESSAGE);
+                } else if (username.isBlank() && username.isEmpty()) {
+                    JOptionPane.showMessageDialog(incomeFrame, "Username field is empty", "Empty username", JOptionPane.ERROR_MESSAGE);
+                } else if (password.isBlank() && password.isEmpty()) {
+                    JOptionPane.showMessageDialog(incomeFrame, "Password field is empty", "Empty password", JOptionPane.ERROR_MESSAGE);
+                } else {
                     choiceFrame.setVisible(true);
                     frameLogin.setVisible(false);
+                    FileSingleton.getInstance().writeMsg("Login button pressed");
                 }
             }
         });
@@ -370,15 +375,21 @@ public class Gui {
         expenseField.setBackground(fieldColor);
         expenseField.setForeground(fontColor);
 
+        // Epense Title
+        expenseTitle = new JLabel("Expense");
+        expenseTitle.setBounds(137, 12, 273, 93);
+        expenseTitle.setForeground(fontColor);
+        expenseTitle.setFont(titleFont);
+
         // Account Label
         expenseAccountLabel = new JLabel("Account:");
-        expenseAccountLabel.setBounds(10, 20, 70, 20);
+        expenseAccountLabel.setBounds(10, 100, 70, 20);
         expenseAccountLabel.setFont(myFont);
         expenseAccountLabel.setForeground(fontColor);
 
         // Category Label
         expenseCategoryLabel = new JLabel("Category:");
-        expenseCategoryLabel.setBounds(10, 100, 100, 20);
+        expenseCategoryLabel.setBounds(10, 170, 100, 20);
         expenseCategoryLabel.setFont(myFont);
         expenseCategoryLabel.setForeground(fontColor);
 
@@ -395,7 +406,7 @@ public class Gui {
 
         // Dropdown expense
         expenseCombo = new JComboBox(expenseCategories);
-        expenseCombo.setBounds(97, 100, 120, 20);
+        expenseCombo.setBounds(97, 170, 120, 20);
         expenseCombo.setFont(myFont);
         expenseCombo.setBackground(fieldColor);
         expenseCombo.setForeground(fontColor);
@@ -403,7 +414,7 @@ public class Gui {
         // Expense buttons
         // - Cash button
         expenseRadioCash = new JRadioButton("Cash");
-        expenseRadioCash.setBounds(97, 50, 100, 20);
+        expenseRadioCash.setBounds(97, 130, 100, 20);
         expenseRadioCash.setOpaque(false);
         expenseRadioCash.setFont(myFont);
         expenseRadioCash.setForeground(fontColor);
@@ -411,7 +422,7 @@ public class Gui {
 
         // - Card button
         expenseRadioCard = new JRadioButton("Card");
-        expenseRadioCard.setBounds(97, 20, 100, 20);
+        expenseRadioCard.setBounds(97, 100, 100, 20);
         expenseRadioCard.setFont(myFont);
         expenseRadioCard.setOpaque(false);
         expenseRadioCard.setForeground(fontColor);
@@ -425,15 +436,17 @@ public class Gui {
         expenseAddButton.setFont(myFont);
         expenseAddButton.setBackground(buttonColor);
         expenseAddButton.setForeground(Color.WHITE);
-        expenseAddButton.setBounds(10, 240, 100, 20);
+        expenseAddButton.setBounds(54, 240, 60, 20);
         expenseAddButton.setBorderPainted(false);
         expenseAddButton.setFocusPainted(false);
         // - Back button
         backTo = new JButton("Back");
         backTo.setFont(myFont);
+        backTo.setBorderPainted(false);
+        backTo.setFocusPainted(false);
         backTo.setBackground(buttonColor);
         backTo.setForeground(Color.white);
-        backTo.setBounds(20, 400, 70, 20);
+        backTo.setBounds(40, 443, 70, 20);
 
         // Add expense button clicked
         expenseAddButton.addActionListener(new ActionListener() {
@@ -442,8 +455,13 @@ public class Gui {
                 expenses.add(new Expense());
                 transactionExpense(expenses);
                 expenses.get(j).transaction();
-                Income.balance-= expenses.get(j).getAmount();
+                expenses.get(j).total();
+                totalExp.setText("Total expenses: " + Expense.total);
+                Income.balance -= expenses.get(j).getAmount();
+                System.out.println(expenses.get(j).toString());
                 j++;
+                expenseField.setText("");
+                FileSingleton.getInstance().writeMsg("Add Expense button was pressed");
             }
         });
         // Back button clicked
@@ -452,14 +470,10 @@ public class Gui {
             public void actionPerformed(ActionEvent e) {
                 choiceFrame.setVisible(true);
                 frameExpenseWindow.setVisible(false);
-                choiceFrame.remove(balanceLabel);
-                balanceLabel = new JLabel("Your current balance is " + Expense.balance);
-                balanceLabel.setBounds(30, 20, 200, 20);
-                balanceLabel.setForeground(fontColor);
-                balanceLabel.setFont(myFont);
-                choiceFrame.add(balanceLabel);
+                balanceLabel.setText("Your current balance is " + Expense.balance);
                 list();
                 choiceFrame.repaint();
+                FileSingleton.getInstance().writeMsg("Back button from Expense window pressed");
             }
         });
 
@@ -475,48 +489,37 @@ public class Gui {
         expensePanel.add(expenseCategoryLabel);
         expensePanel.add(expenseAddButton);
         expensePanel.add(backTo);
+        expensePanel.add(expenseTitle);
         frameExpenseWindow.setLayout(null);
         frameExpenseWindow.setResizable(false);
         frameExpenseWindow.setVisible(false);
         frameExpenseWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-    public void transactionExpense(ArrayList<Expense> expenseTransaction){
-        if(expenseRadioCard.isSelected()) {
-            expenseTransaction.get(j).setAccount("Card");
-        }
-        else if (expenseRadioCash.isSelected()){
-            expenseTransaction.get(j).setAccount("Cash");
-        }
-        else if (! (expenseRadioCard.isSelected()) && !(expenseRadioCash.isSelected())) {
-            JOptionPane.showMessageDialog(frameExpenseWindow, "Choose an account!","Warning" , JOptionPane.WARNING_MESSAGE);
-        }
-        if(expenseCombo.getItemAt(expenseCombo.getSelectedIndex()).equals("-Select-")){
-            JOptionPane.showMessageDialog(frameExpenseWindow, "Choose a category!","Warning" , JOptionPane.WARNING_MESSAGE);
+
+    public void transactionExpense(ArrayList<Expense> expenseTransaction) {
+        if ((!expenseRadioCard.isSelected() && !expenseRadioCash.isSelected() || expenseCombo.getItemAt(expenseCombo.getSelectedIndex()).equals("-Select-")) || expenseField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(frameExpenseWindow, "All fields are required!", "Warning", JOptionPane.WARNING_MESSAGE);
         }
         else {
+            if (expenseRadioCard.isSelected()) {
+                expenseTransaction.get(j).setAccount("Card");
+            }
+            else if (expenseRadioCash.isSelected()) {
+                expenseTransaction.get(j).setAccount("Cash");
+            }
+            if (!expenseCombo.getItemAt(expenseCombo.getSelectedIndex()).equals("-Select-")) {
             expenseTransaction.get(j).setCategory((String) expenseCombo.getItemAt(expenseCombo.getSelectedIndex()));
-        }
-        if(expenseField.getText().isEmpty() && expenseField.getText().isBlank()) {
-            JOptionPane.showMessageDialog(frameExpenseWindow, "Enter an amount!","Warning" , JOptionPane.WARNING_MESSAGE);
-        }
-        else{
-            try {
-                expenseTransaction.get(j).setAmount(Double.parseDouble(expenseField.getText()));
-                JOptionPane.showMessageDialog(frameExpenseWindow, "Expense added successfully!");
             }
-            catch (NumberFormatException ex){
-                JOptionPane.showMessageDialog(frameExpenseWindow, "Invalid amount value", "Error", JOptionPane.ERROR_MESSAGE);
+            if (!expenseField.getText().isEmpty()) {
+                try {
+                    expenseTransaction.get(j).setAmount(Double.parseDouble(expenseField.getText()));
+                    JOptionPane.showMessageDialog(frameExpenseWindow, "Expense added successfully!");
+                } catch (NumberFormatException ex) {
+                    System.out.println("Number format exception");
+                    FileSingleton.getInstance().writeMsg("Number format exception transaction Expense window");
+                    expenseField.setText("");
+                }
             }
-        }
-        try {
-            if (expenseField.getText().isBlank() || expenseField.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(frameExpenseWindow, "Fields cannot be left empty", "Empty Field", JOptionPane.WARNING_MESSAGE);
-            }
-            expenses.get(j).setAmount(Double.parseDouble(expenseField.getText()));
-        }
-        catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(frameExpenseWindow,"Enter a valid amount","Invalid input",JOptionPane.WARNING_MESSAGE);
-            expenseField.setText("");
         }
     }
     public void list(){
@@ -524,19 +527,20 @@ public class Gui {
         int i;
         for( i=0; i<incomes.size(); i++){
             incExp.add(new JLabel("Income: " + incomes.get(i).toString()));
-            incExp.get(i).setBounds(10, 80+20*i, 400, 20);
+            incExp.get(i).setBounds(10, 105+20*i, 400, 20);
             incExp.get(i).setFont(myFont);
             incExp.get(i).setForeground(fontColor);
             choicePanel.add(incExp.get(i));
         }
         for(int j=0; j<expenses.size(); j++){
             incExp.add(new JLabel("Expense: " + expenses.get(j).toString()));
-            incExp.get(i).setBounds(10, 250+20*j, 400, 20);
+            incExp.get(i).setBounds(10, 280+20*j, 400, 20);
             incExp.get(i).setFont(myFont);
             incExp.get(i).setForeground(fontColor);
             choicePanel.add(incExp.get(i));
             i++;
         }
         choiceFrame.repaint();
+    }
  }
-}
+

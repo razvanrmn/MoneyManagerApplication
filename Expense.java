@@ -1,60 +1,41 @@
 
-    public class Expense extends Accounts {
+    public class Expense extends Accounts implements Cont{
         private double amount;
         private String category;
         private String account;
         public static double balance;
-        private final double EUR = 4.90;
-        private final double USD = 4.96;
-        private final double HUF = 1.18;
+        public static double total;
 
         public Expense() {
-            this.category = "Undefined";
-            this.account = "Undefined";
+            this.category = "NULL";
+            this.account = "NULL";
             this.amount = -1;
-        }
 
-       // @Override
-        public double convert(String option) {
-            if (option.equals("EUR")) {
-                return amount * EUR;
-            } else if (option.equals("USD")) {
-                return amount * USD;
-            } else if (option.equals("HUF")) {
-                return amount * HUF;
-            } else {
-                return -1;
-            }
         }
-
-        @Override
-        public double convert() {
-            return 0;
+        public Expense(String category, String account, double amount) {
+            this.category = category;
+            this.account = account;
+            this.amount = amount;
         }
 
         @Override
         public void transaction() {
-            System.out.println("Expense balance " + balance + " " + amount);
-            balance-=amount;
+            balance -= amount;
         }
 
         @Override
         public String toString() {
             StringBuffer str = new StringBuffer();
-            str.append("You spent : ");
+            str.append(account);
+            str.append(" ");
             str.append(amount);
-            str.append(" on ");
+            str.append(" ");
             str.append(category);
+            str.append(" ");
             return str.toString();
         }
-
-        @Override
-        public void total() {
-
-        }
-
         public double getAmount() {
-            return amount;
+            return this.amount;
         }
 
         public double getBalance() {
@@ -77,13 +58,13 @@
             this.amount = amount;
         }
 
-        public void setBalance(double balance) {
-            balance = balance;
-        }
-
         public void setCategory(String category) {
             this.category = category;
         }
 
+        @Override
+        public void total() {
+            total+=amount;
+        }
     }
 
