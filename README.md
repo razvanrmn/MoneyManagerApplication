@@ -1,5 +1,12 @@
 <h1 align="center">Money manager application created by Bogi x Razvan</h1>
 
+<h2 align="center">Diagrama UML</h2>
+
+
+![My Image](img/diagramaUml.jpeg)
+
+<h2 align="center">Prezentarea proiectului</h2>
+
 • La rularea aplicatiei utilizatorul va fi redirectionat catre fereastra de login.
 
 
