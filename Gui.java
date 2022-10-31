@@ -5,10 +5,10 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class Gui {
-    //variables for income window
+    // variables for income window
     JFrame incomeFrame;
     JPanel incomePanel;
-    String[] categories = {"-Select-", "Salary", "Scholarship", "Pension", "Other"};
+    String[] categories = { "-Select-", "Salary", "Scholarship", "Pension", "Other" };
     JComboBox category;
     JButton addIncome;
     JRadioButton card;
@@ -16,6 +16,7 @@ public class Gui {
     JLabel incomeAmountLabel;
     JLabel incomeAccountLabel;
     JLabel incomeCategoryLabel;
+    JLabel incomeTitle;
     JTextField amountField;
     Font myFont = new Font("SimSun", Font.BOLD, 15);
     Font titleFont = new Font("SimSun", Font.PLAIN, 30);
@@ -28,7 +29,7 @@ public class Gui {
     int i;
     JButton back;
 
-    //variables for choice window
+    // variables for choice window
     JFrame choiceFrame;
     JPanel choicePanel;
     JButton incomeButton;
@@ -39,10 +40,10 @@ public class Gui {
     JRadioButton expenseRadioCard;
     ButtonGroup expenseButtons;
 
-    String[] expenseCategories = {"-Select-", "Food", "Bills", "Entertainment", "Other"};
+    String[] expenseCategories = { "-Select-", "Food", "Bills", "Entertainment", "Other" };
     JComboBox expenseCombo;
-    ImageIcon loginImage = new ImageIcon("src\\porcusorLogin.png");
-    ImageIcon expenseImage = new ImageIcon("src\\porcusorExpense.png");
+    ImageIcon loginImage = new ImageIcon("img\\porcusorLogin.png");
+    ImageIcon expenseImage = new ImageIcon("img\\porcusorExpense.png");
     JLabel imageLabelExpense;
     JTextField expenseField;
     JLabel expenseLabel;
@@ -50,7 +51,7 @@ public class Gui {
     JLabel expenseCategoryLabel;
     JButton expenseAddButton;
     int j = 0;
-    //Frame Login / frame expense
+    // Frame Login / frame expense
     JFrame frameLogin;
     JPanel loginPanel;
     JLabel titleLabel;
@@ -70,7 +71,7 @@ public class Gui {
     JLabel totalExp;
     ArrayList<JLabel> incExp = new ArrayList<>();
 
-    //Gui constructor
+    // Gui constructor
     public Gui() {
         createLoginGui();
         createChoiceWindow();
@@ -83,64 +84,77 @@ public class Gui {
         incomeFrame = new JFrame();
         incomePanel = new JPanel();
 
-        //dropdown
+        // dropdown
         category = new JComboBox(categories);
         category.setFont(myFont);
-        category.setBounds(97, 100, 120, 20);
+        category.setBounds(97, 170, 120, 20);
         category.setBackground(fieldColor);
         category.setForeground(fontColor);
 
-        //labels
+        // labels
+        incomeTitle = new JLabel("Income");
+        incomeTitle.setBounds(137, 12, 273, 93);
+        incomeTitle.setForeground(fontColor);
+        incomeTitle.setFont(titleFont);
+
         incomeAccountLabel = new JLabel("Account:");
-        incomeAmountLabel = new JLabel("Amount:");
-        incomeCategoryLabel = new JLabel("Category:");
-
-        incomeAccountLabel.setBounds(10, 20, 70, 20);
-        incomeCategoryLabel.setBounds(10, 100, 70, 20);
-        incomeAmountLabel.setBounds(10, 210, 70, 20);
-
-        incomeAmountLabel.setFont(myFont);
-        incomeCategoryLabel.setFont(myFont);
+        incomeAccountLabel.setBounds(10, 100, 70, 20);
         incomeAccountLabel.setFont(myFont);
-
         incomeAccountLabel.setForeground(fontColor);
-        incomeAmountLabel.setForeground(fontColor);
+
+        incomeAmountLabel = new JLabel("Amount:");
+        incomeAmountLabel.setBounds(10, 210, 70, 20);
+        incomeAmountLabel.setFont(myFont);
         incomeCategoryLabel.setForeground(fontColor);
 
-        //field
+        incomeCategoryLabel = new JLabel("Category:");
+        incomeCategoryLabel.setBounds(10, 170, 100, 20);
+        incomeCategoryLabel.setFont(myFont);
+        incomeAmountLabel.setForeground(fontColor);
+
+        // field
         amountField = new JTextField(30);
         amountField.setBounds(97, 210, 100, 20);
         amountField.setBackground(fieldColor);
         amountField.setForeground(fontColor);
 
-        //buttons
+        // buttons
+        // add
         addIncome = new JButton("Add");
-        addIncome.setBounds(10, 240, 100, 20);
+        addIncome.setBounds(54, 240, 60, 20);
         addIncome.setBackground(buttonColor);
         addIncome.setForeground(Color.white);
         addIncome.setFont(myFont);
-        card = new JRadioButton("Card");
+
+        // cash
         cash = new JRadioButton("Cash");
-        card.setFont(myFont);
         cash.setFont(myFont);
-        card.setForeground(fontColor);
         cash.setForeground(fontColor);
-        card.setOpaque(false);
         cash.setOpaque(false);
-        card.setBounds(97, 20, 100, 20);
-        cash.setBounds(97, 50, 100, 20);
+        cash.setBounds(97, 130, 100, 20);
+
+        // card
+        card = new JRadioButton("Card");
+        card.setFont(myFont);
+        card.setForeground(fontColor);
+        card.setOpaque(false);
+        card.setBounds(97, 100, 100, 20);
+        card.setFocusPainted(false);
+
         ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(card);
         buttonGroup.add(cash);
+
+        //back
         back = new JButton("Back");
         back.setFont(myFont);
         back.setBackground(buttonColor);
         back.setForeground(Color.white);
-        back.setBounds(20, 400, 70, 20);
+        back.setBounds(40, 443, 70, 20);
 
-        //image
+        // image
         JLabel label = new JLabel();
-        myImage = new ImageIcon("src\\piggy.png");
+        myImage = new ImageIcon("img/porcusorExpense.png");
         label.setIcon(myImage);
         label.setBounds(100, 220, 300, 300);
 
@@ -175,6 +189,7 @@ public class Gui {
         incomePanel.setBackground(bgColor);
         incomeFrame.setSize(400, 550);
         incomeFrame.setContentPane(incomePanel);
+        incomePanel.add(incomeTitle);
         incomePanel.add(category);
         incomePanel.add(addIncome);
         incomePanel.add(cash);
@@ -194,20 +209,27 @@ public class Gui {
     public void createChoiceWindow() {
         choiceFrame = new JFrame();
         choicePanel = new JPanel();
+
+        //buttons
+        //expense
         expenseButton = new JButton("Expense");
-        incomeButton = new JButton("Income");
         expenseButton.setFont(myFont);
-        incomeButton.setFont(myFont);
         expenseButton.setForeground(Color.white);
-        incomeButton.setForeground(Color.white);
         expenseButton.setBackground(buttonColor);
+        expenseButton.setBounds(80, 450, 100, 30);
+        expenseButton.setFocusPainted(false);
+        expenseButton.setBorderPainted(false);
+
+        //income
+        incomeButton = new JButton("Income");
+        incomeButton.setFont(myFont);
+        incomeButton.setForeground(Color.white);
         incomeButton.setBackground(buttonColor);
+        incomeButton.setBounds(210, 450, 100, 30);
         incomeButton.setBorderPainted(false);
         incomeButton.setFocusPainted(false);
-        expenseButton.setBounds(80, 450, 100, 30);
-        expenseButton.setBorderPainted(false);
-        expenseButton.setFocusPainted(false);
-        incomeButton.setBounds(210, 450, 100, 30);
+
+        //labels
         balanceLabel = new JLabel("Your current balance is " + Income.balance);
         balanceLabel.setBounds(70, 35, 300, 20);
         balanceLabel.setForeground(fontColor);
@@ -255,8 +277,11 @@ public class Gui {
     }
 
     public void transaction(ArrayList<Income> incomes) {
-        if ((!card.isSelected() && !cash.isSelected()) || category.getItemAt(category.getSelectedIndex()).equals("-Select-") || amountField.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(incomeFrame, "All fields are required!", "Warning", JOptionPane.WARNING_MESSAGE);
+        if ((!card.isSelected() && !cash.isSelected())
+                || category.getItemAt(category.getSelectedIndex()).equals("-Select-")
+                || amountField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(incomeFrame, "All fields are required!", "Warning",
+                    JOptionPane.WARNING_MESSAGE);
         } else {
             if (card.isSelected()) {
                 incomes.get(i).setAccount("Card");
@@ -336,11 +361,14 @@ public class Gui {
                 String password = String.valueOf(pass.getPassword());
 
                 if ((username.isBlank() && username.isEmpty()) && (password.isBlank() && password.isEmpty())) {
-                    JOptionPane.showMessageDialog(incomeFrame, "Fields cannot be left empty", "Blank fields", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(incomeFrame, "Fields cannot be left empty", "Blank fields",
+                            JOptionPane.ERROR_MESSAGE);
                 } else if (username.isBlank() && username.isEmpty()) {
-                    JOptionPane.showMessageDialog(incomeFrame, "Username field is empty", "Empty username", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(incomeFrame, "Username field is empty", "Empty username",
+                            JOptionPane.ERROR_MESSAGE);
                 } else if (password.isBlank() && password.isEmpty()) {
-                    JOptionPane.showMessageDialog(incomeFrame, "Password field is empty", "Empty password", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(incomeFrame, "Password field is empty", "Empty password",
+                            JOptionPane.ERROR_MESSAGE);
                 } else {
                     choiceFrame.setVisible(true);
                     frameLogin.setVisible(false);
@@ -419,7 +447,6 @@ public class Gui {
         expenseRadioCash.setFont(myFont);
         expenseRadioCash.setForeground(fontColor);
 
-
         // - Card button
         expenseRadioCard = new JRadioButton("Card");
         expenseRadioCard.setBounds(97, 100, 100, 20);
@@ -497,18 +524,19 @@ public class Gui {
     }
 
     public void transactionExpense(ArrayList<Expense> expenseTransaction) {
-        if ((!expenseRadioCard.isSelected() && !expenseRadioCash.isSelected() || expenseCombo.getItemAt(expenseCombo.getSelectedIndex()).equals("-Select-")) || expenseField.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(frameExpenseWindow, "All fields are required!", "Warning", JOptionPane.WARNING_MESSAGE);
-        }
-        else {
+        if ((!expenseRadioCard.isSelected() && !expenseRadioCash.isSelected()
+                || expenseCombo.getItemAt(expenseCombo.getSelectedIndex()).equals("-Select-"))
+                || expenseField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(frameExpenseWindow, "All fields are required!", "Warning",
+                    JOptionPane.WARNING_MESSAGE);
+        } else {
             if (expenseRadioCard.isSelected()) {
                 expenseTransaction.get(j).setAccount("Card");
-            }
-            else if (expenseRadioCash.isSelected()) {
+            } else if (expenseRadioCash.isSelected()) {
                 expenseTransaction.get(j).setAccount("Cash");
             }
             if (!expenseCombo.getItemAt(expenseCombo.getSelectedIndex()).equals("-Select-")) {
-            expenseTransaction.get(j).setCategory((String) expenseCombo.getItemAt(expenseCombo.getSelectedIndex()));
+                expenseTransaction.get(j).setCategory((String) expenseCombo.getItemAt(expenseCombo.getSelectedIndex()));
             }
             if (!expenseField.getText().isEmpty()) {
                 try {
@@ -522,19 +550,20 @@ public class Gui {
             }
         }
     }
-    public void list(){
+
+    public void list() {
         ArrayList<JLabel> incExp = new ArrayList<>();
         int i;
-        for( i=0; i<incomes.size(); i++){
+        for (i = 0; i < incomes.size(); i++) {
             incExp.add(new JLabel("Income: " + incomes.get(i).toString()));
-            incExp.get(i).setBounds(10, 105+20*i, 400, 20);
+            incExp.get(i).setBounds(10, 105 + 20 * i, 400, 20);
             incExp.get(i).setFont(myFont);
             incExp.get(i).setForeground(fontColor);
             choicePanel.add(incExp.get(i));
         }
-        for(int j=0; j<expenses.size(); j++){
+        for (int j = 0; j < expenses.size(); j++) {
             incExp.add(new JLabel("Expense: " + expenses.get(j).toString()));
-            incExp.get(i).setBounds(10, 280+20*j, 400, 20);
+            incExp.get(i).setBounds(10, 280 + 20 * j, 400, 20);
             incExp.get(i).setFont(myFont);
             incExp.get(i).setForeground(fontColor);
             choicePanel.add(incExp.get(i));
@@ -542,5 +571,4 @@ public class Gui {
         }
         choiceFrame.repaint();
     }
- }
-
+}
