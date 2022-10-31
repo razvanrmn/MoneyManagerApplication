@@ -1,7 +1,8 @@
-# MoneyManagerApplication
-Proiect final POO
+<h1 align="center">Money manager application created by Bogi x Razvan</h1>
 
 • La rularea aplicatiei utilizatorul va fi redirectionat catre fereastra de login.
+
+
 ![My Image](img/loginImg.jpeg)
 
 
