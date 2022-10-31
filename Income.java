@@ -6,9 +6,7 @@ public class Income extends Accounts implements Cont{
     public static double total;
 
     public Income() {
-        this.category = "Undefined";
-        this.account = "Undefined";
-        this.amount = -1;
+        super();
     }
 
     public Income (Income i) {
