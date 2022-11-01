@@ -3,7 +3,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Date;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;;
 
@@ -45,8 +44,8 @@ public class Gui {
 
     String[] expenseCategories = { "-Select-", "Food", "Bills", "Entertainment", "Other" };
     JComboBox expenseCombo;
-    ImageIcon loginImage = new ImageIcon("img\\porcusorLogin.png");
-    ImageIcon expenseImage = new ImageIcon("img\\porcusorExpense.png");
+    ImageIcon loginImage = new ImageIcon("MoneyManagerApplication-main/img/porcusorLogin.png");
+    ImageIcon expenseImage = new ImageIcon("MoneyManagerApplication-main/img/porcusorExpense.png");
     JLabel imageLabelExpense;
     JTextField expenseField;
     JLabel expenseLabel;
@@ -88,6 +87,9 @@ public class Gui {
     public void createIncomeWindow() {
         incomeFrame = new JFrame("Income");
         incomePanel = new JPanel();
+
+        System.out.println(System.getProperty("user.dir"));
+
 
         // dropdown
         category = new JComboBox(categories);
@@ -201,6 +203,7 @@ public class Gui {
         incomeFrame.setLayout(null);
         incomeFrame.setResizable(false);
         incomeFrame.setVisible(false);
+        incomeFrame.setLocationRelativeTo(null);
         incomeFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
@@ -266,6 +269,7 @@ public class Gui {
         choiceFrame.setLayout(null);
         choiceFrame.setVisible(false);
         choiceFrame.setResizable(false);
+        choiceFrame.setLocationRelativeTo(null);
         choiceFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
@@ -384,6 +388,7 @@ public class Gui {
         frameLogin.setLayout(null);
         frameLogin.setResizable(false);
         frameLogin.setVisible(true);
+        frameLogin.setLocationRelativeTo(null);
         frameLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
@@ -516,6 +521,7 @@ public class Gui {
         frameExpenseWindow.setLayout(null);
         frameExpenseWindow.setResizable(false);
         frameExpenseWindow.setVisible(false);
+        frameExpenseWindow.setLocationRelativeTo(null);
         frameExpenseWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 

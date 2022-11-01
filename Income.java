@@ -1,4 +1,7 @@
-public class Income extends Accounts implements Cont{
+import Application.Accounts;
+import Application.Cont;
+
+public class Income extends Accounts implements Cont {
     private double amount;
     private String category;
     private String account;

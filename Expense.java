@@ -1,5 +1,7 @@
+import Application.Accounts;
+import Application.Cont;
 
-    public class Expense extends Accounts implements Cont{
+public class Expense extends Accounts implements Cont {
         private double amount;
         private String category;
         private String account;
