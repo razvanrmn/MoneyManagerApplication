@@ -73,7 +73,7 @@ public class Gui {
     JLabel totalExp;
     ArrayList<JLabel> incExp = new ArrayList<>();
 
-    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss.SSS");
 
     // Gui constructor
     public Gui() {
@@ -163,7 +163,6 @@ public class Gui {
                 incomes.get(i).total();
                 totalInc.setText("Total incomes: " + Income.total);
                 Expense.balance += incomes.get(i).getAmount();
-                System.out.println(incomes.get(i).toString());
                 i++;
                 amountField.setText("");
                 FileSingleton.getInstance().writeMsg(dtf.format(LocalDateTime.now()) + " Add income button pressed ");
@@ -481,7 +480,6 @@ public class Gui {
                 expenses.get(j).total();
                 totalExp.setText("Total expenses: " + Expense.total);
                 Income.balance -= expenses.get(j).getAmount();
-                System.out.println(expenses.get(j).toString());
                 j++;
                 expenseField.setText("");
                 FileSingleton.getInstance()
