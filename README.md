@@ -39,7 +39,7 @@
 
 
 
-![My Image](img/incomeImg.jpeg)
+![My Image](img/incomeImg.jpeg)     ![My Image](img/dropdownIncome.jpg)
 
 
 • Ferestrele Income si Expense au aceleasi functionalitati, singura diferenta este ca fiecare are propriile categorii.
@@ -51,5 +51,5 @@
 • Este permisa selectarea unei singure optiuni.
 
 
-![My Image](img/expenseImg.jpeg)
+![My Image](img/expenseImg.jpeg)     ![My Image](img/dropdownExpense.jpg)
 
