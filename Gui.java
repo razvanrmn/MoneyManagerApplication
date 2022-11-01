@@ -88,9 +88,6 @@ public class Gui {
         incomeFrame = new JFrame("Income");
         incomePanel = new JPanel();
 
-        System.out.println(System.getProperty("user.dir"));
-
-
         // dropdown
         category = new JComboBox(categories);
         category.setFont(myFont);
@@ -153,7 +150,7 @@ public class Gui {
 
         // image
         JLabel label = new JLabel();
-        myImage = new ImageIcon("img/porcusorExpense.png");
+        myImage = new ImageIcon("MoneyManagerApplication-main/img/porcusorExpense.png");
         label.setIcon(myImage);
         label.setBounds(100, 220, 300, 300);
 
